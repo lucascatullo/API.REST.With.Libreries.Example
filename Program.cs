@@ -1,11 +1,28 @@
+using API.Rest.Example.Data;
+using API.Rest.Example.Data.Models;
+using API.Rest.Example.Infrastructure.Extention;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+using Tools.JWT.Helper.Extension;
+using Utilities.Helpers.Extensions.DefaultConfig;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.AddCustomServices();
+
+builder.Services.AddDbContext<ExampleContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
+
+builder.AddIdentitySiteConfig();
+
+builder.Services.AddSwaggerGen(c => SwaggerDefaultConfig.DefaultConfigFunction(c, Assembly.GetExecutingAssembly().GetName().Name!));
+builder.Services.AddAuthentication().AuthenticateUsingJwt(builder.Configuration);
 
 var app = builder.Build();
 
@@ -21,5 +38,11 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+using (var scope  = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ExampleContext>();
+    await context.CreateRoles(scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>());
+}
 
 app.Run();
+
