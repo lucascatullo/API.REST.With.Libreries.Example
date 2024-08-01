@@ -22,7 +22,12 @@ public class UserController(IUserService userService, IUserMapper mapper, IJwtGe
     private readonly IUserMapper _mapper = mapper;
     private readonly IJwtGenerator _jwtGenerator = jwtGenerator;
 
-
+    /// <summary>
+    /// Register a new user into the system
+    /// </summary>
+    /// <param name="request"></param>
+    /// <response code="400">Invalid request. Check the reponse body</response>
+    /// <returns>User object and a validation JWT token.</returns>
     [AllowAnonymous]
     [HttpPost("create")]
     public async Task<JsonResult> Create([FromBody] CreateUserRequest request)
@@ -43,6 +48,11 @@ public class UserController(IUserService userService, IUserMapper mapper, IJwtGe
         return Json(response.FormatResponse(HttpContext));
     }
 
+    /// <summary>
+    /// Try to log in using user credentials
+    /// </summary>
+    /// <param name="request">Login data. (email and password)</param>
+    /// <returns>User object and a validation JWT token.</returns>
     [AllowAnonymous]
     [HttpPost("login")]
     public async Task<JsonResult> LogIn([FromBody] LoginRequest request)
@@ -63,7 +73,11 @@ public class UserController(IUserService userService, IUserMapper mapper, IJwtGe
     }
 
 
-    
+    /// <summary>
+    /// Extract the user from the Claims
+    /// </summary>
+    /// <response code="401">Unauthorized</response>
+    /// <returns>User object</returns>
     [HttpGet("get")]
     public async Task<JsonResult> Get()
     {

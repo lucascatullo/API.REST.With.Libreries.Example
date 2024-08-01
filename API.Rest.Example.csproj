@@ -15,7 +15,7 @@
     <PackageReference Include="LucasC1992.Core.Custom.Exception" Version="1.0.0" />
     <PackageReference Include="LucasC1992.Core.Mapper" Version="1.0.0" />
     <PackageReference Include="LucasC1992.Core.Models.Manager" Version="1.0.3" />
-    <PackageReference Include="LucasC1992.Tools.Jwt.Helper" Version="1.0.3" />
+    <PackageReference Include="LucasC1992.Tools.Jwt.Helper" Version="1.0.4" />
     <PackageReference Include="LucasC1992.Utilities.Helpers.Extensions" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
@@ -25,7 +25,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.0" />
   </ItemGroup>
 
 </Project>

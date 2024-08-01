@@ -2,6 +2,7 @@
 using API.Rest.Example.Data.Models;
 using API.Rest.Example.Infrastructure.DataManager;
 using API.Rest.Example.Infrastructure.QueryBuilder;
+using API.Rest.Example.Infrastructure.ViewModels.Product.Requests;
 using Code.Models.Manager.Service;
 using Core.Models.Manager.Interface;
 
@@ -26,6 +27,15 @@ public class ProductService(ExampleContext db) : BaseService<Product, int>(db), 
 
         await _db.AddAsync(_dataManager.dataBaseObj);
         await _db.SaveChangesAsync();
+
+        return _dataManager.dataBaseObj;
+    }
+
+    public async Task<Product> EditAsync(IEditProductRequest request)
+    {
+        _dataManager.dataBaseObj = await _query.GetAsync(request.Id);
+        _dataManager.SetValues(request);
+        await _db.SaveChangesAsync(); 
 
         return _dataManager.dataBaseObj;
     }
